@@ -7,7 +7,7 @@ export default function Register() {
     name: '',
     email: '',
     password: '',
-    role: 'student' // or 'admin'
+    role: 'student'
   });
 
   const navigate = useNavigate();
@@ -22,30 +22,73 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
       const res = await axiosClient.post('/auth/register', formData);
       setMessage(res.data.message);
-      setTimeout(() => navigate('/'), 1500); // redirect to login
-    // eslint-disable-next-line no-unused-vars
+      setTimeout(() => navigate('/login'), 1500); // redirect to login page
     } catch (err) {
       setMessage('Registration failed');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <form onSubmit={handleSubmit} className="p-8 bg-white rounded shadow-md w-80">
-        <h2 className="mb-4 text-xl font-bold text-center">Register</h2>
-        {message && <p className="mb-2 text-sm text-blue-500">{message}</p>}
-        <input name="name" onChange={handleChange} placeholder="Name" className="w-full p-2 mb-2 border" required />
-        <input name="email" onChange={handleChange} placeholder="Email" type="email" className="w-full p-2 mb-2 border" required />
-        <input name="password" onChange={handleChange} placeholder="Password" type="password" className="w-full p-2 mb-2 border" required />
-        <select name="role" onChange={handleChange} className="w-full p-2 mb-4 border">
-          <option value="student">Student</option>
-          <option value="admin">Admin</option>
-        </select>
-        <button className="w-full p-2 text-white bg-blue-500 rounded">Register</button>
+    <div className="flex items-center justify-center min-h-screen px-4 bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg"
+      >
+        <h2 className="mb-4 text-2xl font-bold text-center text-gray-800">Register</h2>
+        {message && <p className="mb-2 text-sm text-center text-blue-600">{message}</p>}
+
+        <div className="mb-4">
+          <input
+            name="name"
+            onChange={handleChange}
+            placeholder="Name"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <input
+            name="email"
+            onChange={handleChange}
+            placeholder="Email"
+            type="email"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <input
+            name="password"
+            onChange={handleChange}
+            placeholder="Password"
+            type="password"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+
+        <div className="mb-6">
+          <select
+            name="role"
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition"
+        >
+          Register
+        </button>
       </form>
     </div>
   );

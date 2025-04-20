@@ -22,14 +22,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleLogin} className="p-8 bg-white rounded shadow-md w-80">
+    <div className="flex items-center justify-center min-h-screen px-4 bg-gray-100">
+      <form
+        onSubmit={handleLogin}
+        className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md sm:w-96"
+      >
         <h2 className="mb-4 text-2xl font-bold text-center text-amber-500">Login</h2>
-        {error && <p className="mb-3 text-red-500">{error}</p>}
+        {error && <p className="mb-3 text-sm text-center text-red-500">{error}</p>}
+
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-2 mb-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -37,12 +41,12 @@ export default function Login() {
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-2 mb-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="w-full p-2 text-red-500 bg-blue-500 rounded hover:bg-blue-600">
+        <button className="w-full p-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600">
           Login
         </button>
       </form>
