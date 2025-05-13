@@ -1,71 +1,106 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const links = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+          onClick={() => setIsOpen(false)}
+          className={({ isActive }) =>
+            isActive ? "text-blue-600 font-bold" : ""
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/admin"
+          onClick={() => setIsOpen(false)}
+          className={({ isActive }) =>
+            isActive ? "text-blue-600 font-bold" : ""
+          }
+        >
+          Admin
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/student"
+          onClick={() => setIsOpen(false)}
+          className={({ isActive }) =>
+            isActive ? "text-green-600 font-bold" : ""
+          }
+        >
+          Student
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/teacher"
+          onClick={() => setIsOpen(false)}
+          className={({ isActive }) =>
+            isActive ? "text-purple-600 font-bold" : ""
+          }
+        >
+          Teacher
+        </NavLink>
+      </li>
+    </>
+  );
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
+    <div className="top-0 left-0 z-50 w-full bg-white shadow-md">
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-2 px-4 sm:px-6 py-3">
-        {/* Left Logo */}
-        <div className="sm:w-1/3 text-center sm:text-left">
-          <span className="text-sm font-medium text-gray-500">IIT-JU</span>
-        </div>
-
-        {/* Center Title */}
-        <div className="sm:w-1/3 text-center">
-          <h1 className="text-lg sm:text-xl font-bold text-gray-800">
+        <div className="sm:w-1/3 mx-auto text-center">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-800 text-center">
             Smart Student Management
           </h1>
         </div>
-
-        {/* Right - Login/Logout */}
-        <div className="sm:w-1/3 text-center sm:text-right">
-          {user ? (
-            <button
-              onClick={logout}
-              className="font-semibold text-red-600 hover:underline"
-            >
-              Logout
-            </button>
-          ) : (
-            <Link
-              to="/login"
-              className="font-semibold text-blue-600 hover:underline"
-            >
-              Login
-            </Link>
-          )}
-        </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex flex-wrap justify-center gap-3 px-4 py-3 border-t">
-        <Link
-          to="/"
-          className="px-4 py-2 text-sm sm:text-base text-white bg-blue-600 rounded hover:bg-blue-700"
-        >
-          Home Panel
-        </Link>
-        <Link
-          to="/admin"
-          className="px-4 py-2 text-sm sm:text-base text-white bg-blue-600 rounded hover:bg-blue-700"
-        >
-          Admin Panel
-        </Link>
-        <Link
-          to="/student"
-          className="px-4 py-2 text-sm sm:text-base text-white bg-green-600 rounded hover:bg-green-700"
-        >
-          Student Panel
-        </Link>
-        <Link
-          to="/teacher"
-          className="px-4 py-2 text-sm sm:text-base text-white bg-purple-600 rounded hover:bg-purple-700"
-        >
-          Teacher Panel
-        </Link>
+      {/* Desktop Navigation */}
+      <div className="hidden sm:flex flex-wrap justify-center gap-3 px-4 py-3 border-t">
+        <ul className="menu menu-horizontal px-1">{links}</ul>
+      </div>
+
+      {/* Mobile Hamburger Menu */}
+      <div className="sm:hidden border-t px-4 py-3 flex justify-start relative">
+        <button onClick={toggleMenu} className="btn btn-ghost m-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        {isOpen && (
+          <ul
+            className="menu menu-sm absolute top-14 left-2 z-[1] p-2 shadow bg-base-100 rounded-box w-32"
+          >
+            {links}
+          </ul>
+        )}
       </div>
     </div>
   );
